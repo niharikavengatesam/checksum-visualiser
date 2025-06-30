@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -120,7 +119,7 @@ export const ChecksumCalculator = () => {
   return (
     <div className="space-y-8">
       {/* Progress Steps */}
-      <Card>
+      <Card className="bg-gray-800 border-gray-700">
         <CardContent className="p-6">
           <div className="flex items-center justify-center space-x-4">
             {[
@@ -133,18 +132,18 @@ export const ChecksumCalculator = () => {
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold ${
                   currentStep >= step.num 
                     ? 'bg-blue-600 text-white' 
-                    : 'bg-gray-200 text-gray-600'
+                    : 'bg-gray-700 text-gray-400'
                 }`}>
                   {step.icon}
                 </div>
                 <span className={`ml-2 text-sm ${
-                  currentStep >= step.num ? 'text-blue-600 font-semibold' : 'text-gray-500'
+                  currentStep >= step.num ? 'text-blue-400 font-semibold' : 'text-gray-500'
                 }`}>
                   {step.label}
                 </span>
                 {index < 3 && (
                   <div className={`w-8 h-0.5 mx-4 ${
-                    currentStep > step.num ? 'bg-blue-600' : 'bg-gray-300'
+                    currentStep > step.num ? 'bg-blue-600' : 'bg-gray-700'
                   }`} />
                 )}
               </div>
@@ -193,7 +192,7 @@ export const ChecksumCalculator = () => {
           <Button 
             onClick={resetCalculator}
             variant="outline"
-            className="bg-white hover:bg-gray-50"
+            className="bg-gray-800 hover:bg-gray-700 border-gray-600 text-white"
           >
             🔄 Start New Calculation
           </Button>
