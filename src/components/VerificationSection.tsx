@@ -95,15 +95,16 @@ export const VerificationSection = ({
   const hasError = flippedBitIndex !== null;
 
   return (
-    <Card>
+    <Card className="bg-gray-800 border-gray-700">
       <CardHeader>
-        <CardTitle className="flex items-center justify-between">
+        <CardTitle className="flex items-center justify-between text-white">
           ✅ Step 4: Receiver Verification
           <Button 
             onClick={resetData}
             variant="outline"
             size="sm"
             disabled={!hasError}
+            className="bg-gray-700 border-gray-600 text-gray-300 hover:bg-gray-600"
           >
             <RefreshCw className="w-4 h-4 mr-2" />
             Reset Data
@@ -112,8 +113,8 @@ export const VerificationSection = ({
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Received Data Display */}
-        <div className="bg-gray-50 border border-gray-200 rounded-xl p-6">
-          <h3 className="font-semibold mb-4 text-center">
+        <div className="bg-gray-700 border border-gray-600 rounded-xl p-6">
+          <h3 className="font-semibold mb-4 text-center text-white">
             📥 Received Data at Destination
           </h3>
           
@@ -123,11 +124,11 @@ export const VerificationSection = ({
               {allBlocks.map((block, blockIndex) => (
                 <div key={blockIndex} className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-600">
+                    <span className="text-sm font-medium text-gray-300">
                       {blockIndex === allBlocks.length - 1 ? 'Checksum:' : `Data Block ${blockIndex + 1}:`}
                     </span>
                     {blockIndex < allBlocks.length - 1 && (
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-gray-400">
                         Click any bit to simulate error
                       </span>
                     )}
@@ -135,10 +136,10 @@ export const VerificationSection = ({
                   
                   <div className={`flex space-x-1 p-3 rounded-lg border-2 ${
                     blockIndex === allBlocks.length - 1 
-                      ? 'bg-green-50 border-green-300' 
+                      ? 'bg-green-900/30 border-green-600' 
                       : hasError && flippedBitIndex?.blockIndex === blockIndex
-                      ? 'bg-red-50 border-red-300'
-                      : 'bg-white border-gray-300'
+                      ? 'bg-red-900/30 border-red-600'
+                      : 'bg-gray-800 border-gray-600'
                   }`}>
                     {block.split('').map((bit, bitIndex) => (
                       <button
@@ -147,10 +148,10 @@ export const VerificationSection = ({
                         disabled={blockIndex === allBlocks.length - 1}
                         className={`w-8 h-8 text-sm font-bold rounded border-2 transition-all ${
                           blockIndex === allBlocks.length - 1
-                            ? 'bg-green-100 border-green-300 text-green-700 cursor-not-allowed'
+                            ? 'bg-green-800 border-green-600 text-green-300 cursor-not-allowed'
                             : hasError && flippedBitIndex?.blockIndex === blockIndex && flippedBitIndex?.bitIndex === bitIndex
-                            ? 'bg-red-200 border-red-400 text-red-800 animate-pulse'
-                            : 'bg-white border-gray-300 hover:bg-blue-50 hover:border-blue-300 cursor-pointer'
+                            ? 'bg-red-700 border-red-500 text-red-200 animate-pulse'
+                            : 'bg-gray-700 border-gray-500 hover:bg-blue-800 hover:border-blue-500 cursor-pointer text-gray-200'
                         }`}
                       >
                         {bit}
@@ -159,7 +160,7 @@ export const VerificationSection = ({
                   </div>
                   
                   {hasError && flippedBitIndex?.blockIndex === blockIndex && (
-                    <div className="flex items-center text-sm text-red-600">
+                    <div className="flex items-center text-sm text-red-400">
                       <AlertTriangle className="w-4 h-4 mr-2" />
                       Error simulated at bit position {flippedBitIndex.bitIndex + 1}
                     </div>
@@ -185,43 +186,43 @@ export const VerificationSection = ({
         {verificationResult && (
           <div className={`border-2 rounded-xl p-6 ${
             verificationResult.isValid 
-              ? 'bg-green-50 border-green-300' 
-              : 'bg-red-50 border-red-300'
+              ? 'bg-green-900/30 border-green-600' 
+              : 'bg-red-900/30 border-red-600'
           }`}>
             <div className="text-center">
               <div className="flex items-center justify-center mb-4">
                 {verificationResult.isValid ? (
-                  <CheckCircle className="w-12 h-12 text-green-600" />
+                  <CheckCircle className="w-12 h-12 text-green-400" />
                 ) : (
-                  <XCircle className="w-12 h-12 text-red-600" />
+                  <XCircle className="w-12 h-12 text-red-400" />
                 )}
               </div>
               
               <h3 className={`font-bold text-xl mb-3 ${
-                verificationResult.isValid ? 'text-green-800' : 'text-red-800'
+                verificationResult.isValid ? 'text-green-400' : 'text-red-400'
               }`}>
                 {verificationResult.message}
               </h3>
 
               {/* Verification Calculation */}
-              <div className="bg-white p-4 rounded-lg mb-4">
-                <div className="text-sm text-gray-600 mb-2">
+              <div className="bg-gray-700 p-4 rounded-lg mb-4">
+                <div className="text-sm text-gray-300 mb-2">
                   Verification Calculation:
                 </div>
                 <div className="font-mono text-sm space-y-1">
                   {allBlocks.map((block, index) => (
-                    <div key={index}>
+                    <div key={index} className="text-blue-300">
                       {index === 0 ? '' : '+ '}{block} 
                       {index === allBlocks.length - 1 ? ' (checksum)' : ` (block ${index + 1})`}
                     </div>
                   ))}
-                  <div className="border-t pt-1 font-bold">
+                  <div className="border-t border-gray-500 pt-1 font-bold text-blue-300">
                     = {verificationResult.receivedSum}
                   </div>
                 </div>
                 
                 <div className={`mt-3 text-sm ${
-                  verificationResult.isValid ? 'text-green-700' : 'text-red-700'
+                  verificationResult.isValid ? 'text-green-300' : 'text-red-300'
                 }`}>
                   Expected: 11111111 (all 1s for valid data)
                   <br />
@@ -232,12 +233,12 @@ export const VerificationSection = ({
               </div>
 
               {verificationResult.isValid ? (
-                <p className="text-green-700">
+                <p className="text-green-300">
                   The sum of all blocks (including checksum) equals 11111111, 
                   confirming data integrity.
                 </p>
               ) : (
-                <p className="text-red-700">
+                <p className="text-red-300">
                   The sum doesn't equal 11111111, indicating data corruption 
                   was detected during transmission.
                 </p>
@@ -247,12 +248,12 @@ export const VerificationSection = ({
         )}
 
         {/* How Verification Works */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <div className="bg-blue-900/30 border border-blue-700 rounded-lg p-4">
           <div className="flex items-start">
-            <div className="bg-blue-100 rounded-full p-2 mr-3">
-              <CheckCircle className="w-4 h-4 text-blue-600" />
+            <div className="bg-blue-800 rounded-full p-2 mr-3">
+              <CheckCircle className="w-4 h-4 text-blue-300" />
             </div>
-            <div className="text-sm text-blue-800">
+            <div className="text-sm text-blue-300">
               <p className="font-medium mb-1">How Checksum Verification Works:</p>
               <ol className="list-decimal list-inside space-y-1">
                 <li>Add all received blocks including the checksum</li>
@@ -268,8 +269,8 @@ export const VerificationSection = ({
         </div>
 
         {/* Additional Learning */}
-        <div className="bg-purple-50 border border-purple-200 rounded-lg p-4">
-          <div className="text-sm text-purple-800">
+        <div className="bg-purple-900/30 border border-purple-700 rounded-lg p-4">
+          <div className="text-sm text-purple-300">
             <p className="font-medium mb-2">🎓 Learning Note:</p>
             <p>
               Checksums can detect single-bit errors and some multi-bit errors, but they're not 

@@ -31,7 +31,7 @@ export const CalculationSection = ({ steps, checksum }: CalculationSectionProps)
   const formatBinaryWithCarry = (binary: string, carry: string) => {
     if (!carry || carry === '0') return binary;
     return binary.split('').map((bit, index) => (
-      <span key={index} className={index === 0 ? 'text-red-600 font-bold' : ''}>
+      <span key={index} className={index === 0 ? 'text-red-400 font-bold' : ''}>
         {bit}
       </span>
     ));
@@ -40,9 +40,9 @@ export const CalculationSection = ({ steps, checksum }: CalculationSectionProps)
   const currentStep = steps[currentStepIndex];
 
   return (
-    <Card>
+    <Card className="bg-gray-800 border-gray-700">
       <CardHeader>
-        <CardTitle className="flex items-center justify-between">
+        <CardTitle className="flex items-center justify-between text-white">
           🧮 Step 2: Checksum Calculation
           <div className="flex space-x-2">
             <Button 
@@ -50,6 +50,7 @@ export const CalculationSection = ({ steps, checksum }: CalculationSectionProps)
               variant="outline"
               size="sm"
               disabled={currentStepIndex === 0}
+              className="bg-gray-700 border-gray-600 text-gray-300 hover:bg-gray-600"
             >
               <RotateCcw className="w-4 h-4 mr-2" />
               Reset
@@ -68,14 +69,14 @@ export const CalculationSection = ({ steps, checksum }: CalculationSectionProps)
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Progress Indicator */}
-        <div className="flex items-center justify-between text-sm text-gray-600">
+        <div className="flex items-center justify-between text-sm text-gray-400">
           <span>Step {currentStepIndex + 1} of {steps.length}</span>
           <div className="flex space-x-1">
             {steps.map((_, index) => (
               <div
                 key={index}
                 className={`w-2 h-2 rounded-full ${
-                  index <= currentStepIndex ? 'bg-blue-600' : 'bg-gray-300'
+                  index <= currentStepIndex ? 'bg-blue-600' : 'bg-gray-600'
                 }`}
               />
             ))}
@@ -84,51 +85,51 @@ export const CalculationSection = ({ steps, checksum }: CalculationSectionProps)
 
         {/* Current Step Display */}
         <div className={`transition-all duration-300 ${isAnimating ? 'opacity-50 scale-95' : 'opacity-100 scale-100'}`}>
-          <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl border">
-            <h3 className="font-semibold text-lg mb-4 text-center">
+          <div className="bg-gradient-to-r from-blue-900/30 to-purple-900/30 p-6 rounded-xl border border-gray-600">
+            <h3 className="font-semibold text-lg mb-4 text-center text-white">
               {currentStep.description}
             </h3>
             
             <div className="space-y-4">
               {/* Binary Addition Display */}
-              <div className="bg-white p-4 rounded-lg font-mono text-center">
+              <div className="bg-gray-700 p-4 rounded-lg font-mono text-center">
                 {currentStep.operand2 && (
                   <>
                     <div className="flex justify-center items-center space-x-4 text-lg">
-                      <span className="text-gray-600">+</span>
-                      <code className="tracking-wider">
+                      <span className="text-gray-400">+</span>
+                      <code className="tracking-wider text-blue-300">
                         {formatBinaryWithCarry(currentStep.operand1, currentStep.carry)}
                       </code>
                     </div>
                     <div className="flex justify-center items-center space-x-4 text-lg mt-2">
                       <span className="invisible">+</span>
-                      <code className="tracking-wider">{currentStep.operand2}</code>
+                      <code className="tracking-wider text-blue-300">{currentStep.operand2}</code>
                     </div>
-                    <div className="border-t-2 border-gray-300 mt-2 mb-2"></div>
+                    <div className="border-t-2 border-gray-500 mt-2 mb-2"></div>
                   </>
                 )}
                 
                 <div className="flex justify-center items-center space-x-4 text-lg font-bold">
-                  <span className={currentStep.operand2 ? "invisible" : "text-gray-600"}>
+                  <span className={`${currentStep.operand2 ? "invisible" : "text-gray-400"}`}>
                     {currentStep.description.includes("complement") ? "~" : "="}
                   </span>
                   <code className={`tracking-wider ${
-                    currentStep.description.includes("complement") ? "text-green-600" : "text-blue-600"
+                    currentStep.description.includes("complement") ? "text-green-400" : "text-blue-400"
                   }`}>
                     {currentStep.result}
                   </code>
                 </div>
                 
                 {currentStep.carry && currentStep.carry !== '0' && (
-                  <div className="mt-3 text-sm text-red-600">
+                  <div className="mt-3 text-sm text-red-400">
                     <span>Carry: {currentStep.carry} (wrapped around)</span>
                   </div>
                 )}
               </div>
 
               {/* Step Explanation */}
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <div className="text-sm text-yellow-800">
+              <div className="bg-yellow-900/30 border border-yellow-700 rounded-lg p-4">
+                <div className="text-sm text-yellow-300">
                   {currentStep.description.includes("complement") ? (
                     <div>
                       <p className="font-medium mb-2">1's Complement Calculation:</p>
@@ -157,20 +158,20 @@ export const CalculationSection = ({ steps, checksum }: CalculationSectionProps)
 
         {/* Final Result */}
         {currentStepIndex === steps.length - 1 && (
-          <div className="bg-green-50 border border-green-200 rounded-xl p-6 text-center">
-            <h3 className="font-bold text-xl text-green-800 mb-3">
+          <div className="bg-green-900/30 border border-green-700 rounded-xl p-6 text-center">
+            <h3 className="font-bold text-xl text-green-400 mb-3">
               ✅ Checksum Calculated!
             </h3>
-            <div className="bg-white p-4 rounded-lg inline-block">
-              <div className="text-sm text-gray-600 mb-2">Final Checksum:</div>
-              <code className="text-2xl font-bold text-green-600 tracking-wider">
+            <div className="bg-gray-700 p-4 rounded-lg inline-block">
+              <div className="text-sm text-gray-400 mb-2">Final Checksum:</div>
+              <code className="text-2xl font-bold text-green-400 tracking-wider">
                 {checksum}
               </code>
-              <div className="text-sm text-gray-600 mt-2">
+              <div className="text-sm text-gray-400 mt-2">
                 (Decimal: {parseInt(checksum, 2)})
               </div>
             </div>
-            <p className="text-sm text-green-700 mt-4">
+            <p className="text-sm text-green-300 mt-4">
               This checksum will be appended to your data for transmission
             </p>
           </div>
@@ -178,16 +179,16 @@ export const CalculationSection = ({ steps, checksum }: CalculationSectionProps)
 
         {/* All Steps Summary */}
         {currentStepIndex === steps.length - 1 && (
-          <div className="bg-gray-50 rounded-lg p-4">
-            <h4 className="font-semibold mb-3">Complete Calculation Steps:</h4>
+          <div className="bg-gray-700 rounded-lg p-4">
+            <h4 className="font-semibold mb-3 text-white">Complete Calculation Steps:</h4>
             <div className="space-y-2 text-sm">
               {steps.map((step, index) => (
                 <div key={index} className="flex items-center space-x-3">
-                  <span className="bg-blue-100 text-blue-600 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+                  <span className="bg-blue-800 text-blue-300 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
                     {step.step}
                   </span>
-                  <span className="flex-1">{step.description}</span>
-                  <code className="font-mono text-xs bg-white px-2 py-1 rounded">
+                  <span className="flex-1 text-gray-300">{step.description}</span>
+                  <code className="font-mono text-xs bg-gray-800 px-2 py-1 rounded text-blue-300">
                     {step.result}
                   </code>
                 </div>

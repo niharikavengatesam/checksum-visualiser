@@ -90,16 +90,16 @@ export const DataInputSection = ({ dataBlocks, setDataBlocks, onCalculate }: Dat
   };
 
   return (
-    <Card>
+    <Card className="bg-gray-800 border-gray-700">
       <CardHeader>
-        <CardTitle className="flex items-center">
+        <CardTitle className="flex items-center text-white">
           📝 Step 1: Input Data Blocks
           <div className="ml-auto">
             <Button 
               onClick={addSampleData}
               variant="outline" 
               size="sm"
-              className="text-blue-600 border-blue-200 hover:bg-blue-50"
+              className="text-blue-400 border-blue-500 hover:bg-blue-900/50 bg-transparent"
             >
               Load Sample Data
             </Button>
@@ -114,7 +114,7 @@ export const DataInputSection = ({ dataBlocks, setDataBlocks, onCalculate }: Dat
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               inputType === 'binary'
                 ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
             }`}
           >
             Binary (8-bit)
@@ -124,7 +124,7 @@ export const DataInputSection = ({ dataBlocks, setDataBlocks, onCalculate }: Dat
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
               inputType === 'decimal'
                 ? 'bg-blue-600 text-white'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
             }`}
           >
             Decimal (0-255)
@@ -134,7 +134,7 @@ export const DataInputSection = ({ dataBlocks, setDataBlocks, onCalculate }: Dat
         {/* Input Field */}
         <div className="flex space-x-3">
           <div className="flex-1">
-            <Label htmlFor="dataInput" className="text-sm font-medium">
+            <Label htmlFor="dataInput" className="text-sm font-medium text-gray-300">
               {inputType === 'binary' ? 'Enter 8-bit binary data' : 'Enter decimal value'}
             </Label>
             <Input
@@ -142,7 +142,7 @@ export const DataInputSection = ({ dataBlocks, setDataBlocks, onCalculate }: Dat
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               placeholder={inputType === 'binary' ? 'e.g., 11010011' : 'e.g., 211'}
-              className="mt-1"
+              className="mt-1 bg-gray-700 border-gray-600 text-white placeholder-gray-400"
               maxLength={inputType === 'binary' ? 8 : 3}
             />
           </div>
@@ -157,10 +157,10 @@ export const DataInputSection = ({ dataBlocks, setDataBlocks, onCalculate }: Dat
         </div>
 
         {/* Info Box */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+        <div className="bg-blue-900/30 border border-blue-700 rounded-lg p-4">
           <div className="flex items-start">
-            <Info className="w-5 h-5 text-blue-600 mt-0.5 mr-3 flex-shrink-0" />
-            <div className="text-sm text-blue-800">
+            <Info className="w-5 h-5 text-blue-400 mt-0.5 mr-3 flex-shrink-0" />
+            <div className="text-sm text-blue-300">
               <p className="font-medium mb-1">How it works:</p>
               <p>
                 Enter multiple 8-bit data blocks that you want to transmit. The checksum algorithm 
@@ -174,21 +174,21 @@ export const DataInputSection = ({ dataBlocks, setDataBlocks, onCalculate }: Dat
         {/* Data Blocks Display */}
         {dataBlocks.length > 0 && (
           <div>
-            <h3 className="font-semibold mb-3">Data Blocks ({dataBlocks.length})</h3>
+            <h3 className="font-semibold mb-3 text-white">Data Blocks ({dataBlocks.length})</h3>
             <div className="space-y-2">
               {dataBlocks.map((block, index) => (
                 <div 
                   key={block.id}
-                  className="flex items-center justify-between bg-gray-50 p-3 rounded-lg"
+                  className="flex items-center justify-between bg-gray-700 p-3 rounded-lg"
                 >
                   <div className="flex items-center space-x-4">
-                    <span className="text-sm font-medium text-gray-600">
+                    <span className="text-sm font-medium text-gray-300">
                       Block {index + 1}:
                     </span>
-                    <code className="font-mono text-lg tracking-wider bg-white px-3 py-1 rounded border">
+                    <code className="font-mono text-lg tracking-wider bg-gray-800 px-3 py-1 rounded border border-gray-600 text-blue-300">
                       {block.binary}
                     </code>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-gray-400">
                       (Decimal: {parseInt(block.binary, 2)})
                     </span>
                   </div>
@@ -196,7 +196,7 @@ export const DataInputSection = ({ dataBlocks, setDataBlocks, onCalculate }: Dat
                     onClick={() => removeBlock(block.id)}
                     variant="ghost"
                     size="sm"
-                    className="text-red-600 hover:text-red-700 hover:bg-red-50"
+                    className="text-red-400 hover:text-red-300 hover:bg-red-900/30"
                   >
                     <Trash2 className="w-4 h-4" />
                   </Button>
